@@ -3,17 +3,12 @@ abstract: 'Alternate Math::Prime::FastSieve using Inline::Module'
 author:
   - 'David Oswald <davido [@at] cpan [d.o.t] org>'
 build_requires:
-  English: '0'
   ExtUtils::MakeMaker: '7.04'
-  Inline: '0.78'
-  Inline::C: '0.67'
-  Inline::CPP: '0.68'
-  Inline::Module: '0.18'
   Test::More: '1.001009'
 configure_requires:
   ExtUtils::MakeMaker: '7.04'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.132830'
+generated_by: 'ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.142690'
 license: artistic
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -29,4 +24,4 @@ provides:
     version: '0.01'
 requires:
   perl: '5.008001'
-version: '0.01'
+version: '0.02'

@@ -4,7 +4,7 @@
       "David Oswald <davido [@at] cpan [d.o.t] org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.132830",
+   "generated_by" : "ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.142690",
    "license" : [
       "artistic_1"
    ],
@@ -22,12 +22,7 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "English" : "0",
             "ExtUtils::MakeMaker" : "7.04",
-            "Inline" : "0.78",
-            "Inline::C" : "0.67",
-            "Inline::CPP" : "0.68",
-            "Inline::Module" : "0.18",
             "Test::More" : "1.001009"
          }
       },
@@ -49,5 +44,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.01"
+   "version" : "0.02"
 }
