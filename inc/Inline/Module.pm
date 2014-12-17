@@ -1,6 +1,6 @@
 use strict; use warnings;
 package Inline::Module;
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 
 use Config();
 use File::Path();
@@ -97,7 +97,7 @@ sub importer {
         Inline->import(
             Config =>
             directory => $inline_build_path,
-            ($lang eq 'C') ? (using => 'Inline::C::Parser::RecDescent') : (),
+            ($lang eq 'C') ? (using => 'Inline::C::Parser::RegExp') : (),
             name => $stub_module,
             CLEAN_AFTER_BUILD => 0,
         );
@@ -169,6 +169,8 @@ sub included_modules {
     }
     if (grep /:CPP$/, @$ilsm) {
         push @include,
+            'Inline::C',
+            'Inline::CPP::Config',
             'Inline::CPP::Parser::RecDescent',
             'Parse::RecDescent';
     }
