@@ -22,21 +22,22 @@ WriteMakefile(
         'ExtUtils::MakeMaker' => '7.04',
         'Test::More'          => '1.001009',
     },
-    META_MERGE => {
-        prereqs => {
+    META_MERGE   => {
+        'meta-spec' => { version => 2 },
+        prereqs     => {
             develop => {
                 requires => {
                     'Inline::CPP'    => '0.69',
                     'Inline'         => '0.78',
                     'Inline::C'      => '0.67',
                     'Inline::Module' => '0.21',
-                 },
+                },
             },
         },
         provides => {
             'Alt::Math::Prime::FastSieve::Inline' => {
                 file    => 'lib/Alt/Math/Prime/FastSieve/Inline.pm',
-                version => '0.01',
+                version => '0.04',
             },
         },
     },

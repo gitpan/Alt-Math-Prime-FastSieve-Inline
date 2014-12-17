@@ -31,6 +31,14 @@
             "ExtUtils::MakeMaker" : "7.04"
          }
       },
+      "develop" : {
+         "requires" : {
+            "Inline" : "0.78",
+            "Inline::C" : "0.67",
+            "Inline::CPP" : "0.69",
+            "Inline::Module" : "0.21"
+         }
+      },
       "runtime" : {
          "requires" : {
             "perl" : "5.008001"
@@ -40,9 +48,9 @@
    "provides" : {
       "Alt::Math::Prime::FastSieve::Inline" : {
          "file" : "lib/Alt/Math/Prime/FastSieve/Inline.pm",
-         "version" : "0.01"
+         "version" : "0.04"
       }
    },
    "release_status" : "stable",
-   "version" : "0.03"
+   "version" : "0.04"
 }

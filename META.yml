@@ -21,7 +21,7 @@ no_index:
 provides:
   Alt::Math::Prime::FastSieve::Inline:
     file: lib/Alt/Math/Prime/FastSieve/Inline.pm
-    version: '0.01'
+    version: '0.04'
 requires:
   perl: '5.008001'
-version: '0.03'
+version: '0.04'
