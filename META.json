@@ -4,7 +4,7 @@
       "David Oswald <davido [@at] cpan [d.o.t] org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.132830",
    "license" : [
       "artistic_1"
    ],
@@ -36,7 +36,7 @@
             "Inline" : "0.78",
             "Inline::C" : "0.67",
             "Inline::CPP" : "0.69",
-            "Inline::Module" : "0.21"
+            "Inline::Module" : "0.25"
          }
       },
       "runtime" : {
@@ -48,9 +48,9 @@
    "provides" : {
       "Alt::Math::Prime::FastSieve::Inline" : {
          "file" : "lib/Alt/Math/Prime/FastSieve/Inline.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       }
    },
    "release_status" : "stable",
-   "version" : "0.04"
+   "version" : "0.05"
 }
