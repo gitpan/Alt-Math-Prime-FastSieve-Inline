@@ -1,41 +1,63 @@
+# This module comes from Inline::Module share file: 'CPPConfig.pm'
+
+use strict; use warnings;
 package Inline::CPP::Config;
 
-# Configuration data for CPP.pm; Compiler, libs, iostream filename, #defines.
+use Config;
+use ExtUtils::CppGuess;
 
-use strict;
-use warnings;
+our ($compiler, $libs, $iostream_fn, $cpp_flavor_defs) = guess();
 
-our $VERSION = '0.68';
-#$VERSION = eval $VERSION; ## no critic (eval)
-
-
-# DO NOT MANUALLY ALTER THE FOLLOWING TWO LINES: Makefile.PL locates them by
-# matching their syntax and identifier names.
-our $compiler = 'g++ -xc++  -D_FILE_OFFSET_BITS=64';
-our $libs     = '-lstdc++';
-
-
-
-# DO NOT MANUALLY ALTER THE FOLLOWING LINE: Makefile.PL locates it by
-# matching its syntax and identifier name.
-our $iostream_fn = 'iostream';
-
-
-
-# DON'T EDIT THIS HERE-DOC.  These are set by Makefile.PL.  Override
-# by supplying undefs in an AUTO_INCLUDE configuration.
-our $cpp_flavor_defs =  <<'END_FLAVOR_DEFINITIONS';
-
+sub guess {
+    my ($compiler, $libs, $iostream_fn, $cpp_flavor_defs);
+    $iostream_fn = 'iostream';
+    $cpp_flavor_defs = <<'.';
 #define __INLINE_CPP_STANDARD_HEADERS 1
 #define __INLINE_CPP_NAMESPACE_STD 1
+.
 
-END_FLAVOR_DEFINITIONS
+    if ($Config::Config{osname} eq 'freebsd'
+        && $Config::Config{osvers} =~ /^(\d+)/
+        && $1 >= 10
+    ) {
+        $compiler = 'clang++';
+        $libs = '-lc++';
+    }
+    else {
+        my $guesser = ExtUtils::CppGuess->new;
+        my %configuration = $guesser->module_build_options;
+        if( $guesser->is_gcc ) {
+            $compiler = 'g++';
+        }
+        elsif ( $guesser->is_msvc ) {
+            $compiler = 'cl';
+        }
 
+        $compiler .= $configuration{extra_compiler_flags};
+        $libs = $configuration{extra_linker_flags};
+
+        ($compiler, $libs) = map {
+            _trim_whitespace($_)
+        } ($compiler, $libs);
+    }
+    return ($compiler, $libs, $iostream_fn, $cpp_flavor_defs);
+}
+
+sub throw {
+    my $os = $^O;
+    my $msg = "Unsupported OS/Compiler for Inline::Module+Inline::CPP '$os'";
+    die $msg unless
+        $ENV{PERL5_MINISMOKEBOX} ||
+        $ENV{PERL_CR_SMOKER_CURRENT};
+    eval 'use lib "inc"; use Inline::Module; 1' or die $@;
+    Inline::Module->smoke_system_info_dump($msg);
+}
+
+sub _trim_whitespace {
+    my $string = shift;
+    $string =~ s/^\s+|\s+$//g;
+    $string =~ s/\s+/ /g;
+    return $string;
+}
 
 1;
-
-__END__
-
-=head1  Inline::CPP::Config
-
-For internal consumption; nothing to document.
