@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '7.04'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.143240'
+generated_by: 'ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.132830'
 license: artistic
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -21,7 +21,7 @@ no_index:
 provides:
   Alt::Math::Prime::FastSieve::Inline:
     file: lib/Alt/Math/Prime/FastSieve/Inline.pm
-    version: '0.06'
+    version: '0.07'
 requires:
   perl: '5.008001'
-version: '0.06'
+version: '0.07'

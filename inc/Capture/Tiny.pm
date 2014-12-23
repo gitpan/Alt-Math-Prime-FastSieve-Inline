@@ -3,7 +3,7 @@ use strict;
 use warnings;
 package Capture::Tiny;
 # ABSTRACT: Capture STDOUT and STDERR from Perl, XS or external programs
-our $VERSION = '0.27';
+our $VERSION = '0.22'; # VERSION
 use Carp ();
 use Exporter ();
 use IO::Handle ();
@@ -63,18 +63,11 @@ our $TIMEOUT = 30;
 # This is annoying, but seems to be the best that can be done
 # as a simple, portable IPC technique
 #--------------------------------------------------------------------------#
-my @cmd = ($^X, '-C0', '-e', <<'HERE');
-use Fcntl;
-$SIG{HUP}=sub{exit};
-if ( my $fn=shift ) {
-    sysopen(my $fh, qq{$fn}, O_WRONLY|O_CREAT|O_EXCL) or die $!;
-    print {$fh} $$;
-    close $fh;
-}
-my $buf; while (sysread(STDIN, $buf, 2048)) {
-    syswrite(STDOUT, $buf); syswrite(STDERR, $buf);
-}
-HERE
+my @cmd = ($^X, '-C0', '-e', '$SIG{HUP}=sub{exit}; '
+  . 'if( my $fn=shift ){ open my $fh, qq{>$fn}; print {$fh} $$; close $fh;} '
+  . 'my $buf; while (sysread(STDIN, $buf, 2048)) { '
+  . 'syswrite(STDOUT, $buf); syswrite(STDERR, $buf)}'
+);
 
 #--------------------------------------------------------------------------#
 # filehandle manipulation
@@ -121,7 +114,7 @@ sub _proxy_std {
       _open $dup{stdin} = IO::Handle->new, "<&=STDIN";
     }
     $proxies{stdin} = \*STDIN;
-    binmode(STDIN, ':utf8') if $] >= 5.008; ## no critic
+    binmode(STDIN, ':utf8') if $] >= 5.008;
   }
   if ( ! defined fileno STDOUT ) {
     $proxy_count{stdout}++;
@@ -135,7 +128,7 @@ sub _proxy_std {
       _open $dup{stdout} = IO::Handle->new, ">&=STDOUT";
     }
     $proxies{stdout} = \*STDOUT;
-    binmode(STDOUT, ':utf8') if $] >= 5.008; ## no critic
+    binmode(STDOUT, ':utf8') if $] >= 5.008;
   }
   if ( ! defined fileno STDERR ) {
     $proxy_count{stderr}++;
@@ -149,7 +142,7 @@ sub _proxy_std {
       _open $dup{stderr} = IO::Handle->new, ">&=STDERR";
     }
     $proxies{stderr} = \*STDERR;
-    binmode(STDERR, ':utf8') if $] >= 5.008; ## no critic
+    binmode(STDERR, ':utf8') if $] >= 5.008;
   }
   return %proxies;
 }
